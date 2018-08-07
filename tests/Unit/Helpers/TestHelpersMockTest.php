@@ -13,7 +13,6 @@ use Tests\TestCase;
  * Class TestHelpersMockTest
  * @package Tests\Unit\Helpers
  * @covers \Ekvedaras\LaravelTestHelpers\Helpers\TestHelpersMock
- * @runTestsInSeparateProcesses
  */
 class TestHelpersMockTest extends TestCase
 {

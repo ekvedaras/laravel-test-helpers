@@ -119,7 +119,7 @@ trait BuildsMocks
         $mock = $builder->getMock();
         $mockedClass = get_class($mock);
         $helperClass = $this->getClassShortName(TestHelpersMock::class);
-        $wrapperClass = $helperClass . '_' . $mockedClass;
+        $wrapperClass = $helperClass . '_' . $mockedClass . '_' . str_random();
 
         $template = file_get_contents(__DIR__ . '/../../Helpers/TestHelpersMock.php');
         $template = str_replace("class $helperClass", "class $wrapperClass extends $mockedClass", $template);

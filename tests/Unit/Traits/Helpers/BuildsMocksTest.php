@@ -10,7 +10,6 @@ use Tests\TestCase;
 /**
  * Class BuildsMocksTest
  * @package Tests\Unit\Traits\Helpers
- * @runTestsInSeparateProcesses
  */
 class BuildsMocksTest extends TestCase
 {
