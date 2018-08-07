@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ekvedaras\LaravelTestHelpers\Helpers;
+namespace Ekvedaras\LaravelTestHelpers\Traits\Helpers;
 
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Application;

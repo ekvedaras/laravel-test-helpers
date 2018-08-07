@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+
+  laravel-test-helpers:
+    build: .
+    networks:
+    - net
+    volumes:
+    - ./:/home/docker/src
+    - composer_cache:/home/docker/composer
+    environment:
+      PHP_XDEBUG_ENABLED: 1
+      XDEBUG_CONFIG: "remote_host=10.0.2.2"
+      PHP_IDE_CONFIG: "serverName=laravel-test-helpers"
+
+volumes:
+  composer_cache:
+    driver: local
+
+networks:
+  net:
+    driver: bridge

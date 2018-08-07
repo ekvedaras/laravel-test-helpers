@@ -22,7 +22,7 @@ Providers helper methods for defining PhpUnit mock expectations more quickly.
 * `never`
 * `fail`
 
-> NOTE: To create this mock `initPhpUnitMock` has to be used
+> NOTE: To create this mock `BuildsMocks@mock` has to be used
 
 ### [`BuildsMocks`](src/Traits/BuildsMocks.php) trait
 
@@ -45,7 +45,10 @@ Providers helper methods for defining PhpUnit mock expectations more quickly.
 ### Mock expectations with `TestHelpersMock`
 
 ```php
-$mock = $this->initPHPUnitMock('SomeClass');
+$mock = $this->mock('SomeClass');
+
+// Default
+// Using helpers
     
 $mock->expects($this->once())->method('someMethod');
 $mock->once('someMethod');
@@ -70,9 +73,6 @@ $mock->consecutive(3, 'someMethod', [$foo], [$bar], [$foo, $bar]);
 
 $mock->expects($this->never())->method('someMethod');
 $mock->never('someMethod');
-
-$mock->expects($this->never())->method('someMethod')->with($foo, $bar);
-$mock->never('someMethod', $foo, $bar);
 
 $mock->expects($this->any())->method('someMethod')->willThrowException(new \Exception());
 $mock->fail('someMethod', new \Exception());

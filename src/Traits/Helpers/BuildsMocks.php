@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Ekvedaras\LaravelTestHelpers\Helpers;
+namespace Ekvedaras\LaravelTestHelpers\Traits\Helpers;
 
+use Ekvedaras\LaravelTestHelpers\Helpers\TestHelpersMock;
 use Illuminate\Foundation\Application;
 use Mockery;
 use Mockery\MockInterface;
@@ -26,16 +27,16 @@ trait BuildsMocks
      * @param array|null|bool $methods
      * @param array|null $constructorArgs
      * @param bool $onlyForInjector
-     * @return TestHelpersMock
+     * @return PHPUnit_Framework_MockObject_MockObject|TestHelpersMock
      * @throws RuntimeException
      */
-    protected function initPHPUnitMock(
+    protected function mock(
         string $mockClass,
         string $injectorClass = null,
         $methods = false,
         array $constructorArgs = null,
         bool $onlyForInjector = false
-    ): TestHelpersMock {
+    ): PHPUnit_Framework_MockObject_MockObject {
         $this->forgetInstances($mockClass, $injectorClass);
         $mock = $this->createPHPUnitMockBuilder($mockClass, $constructorArgs, $methods);
         $this->injectMockToLaravel($mockClass, $mock, $onlyForInjector, $injectorClass);
@@ -49,7 +50,7 @@ trait BuildsMocks
      * @param bool $onlyForInjector
      * @return MockInterface
      */
-    protected function initMockeryMock(
+    protected function mockery(
         string $mockClass,
         string $injectorClass = null,
         bool $onlyForInjector = false
@@ -96,13 +97,13 @@ trait BuildsMocks
      * @param string $mockClass
      * @param array|null $constructorArgs
      * @param array|null|bool $methods
-     * @return TestHelpersMock
+     * @return PHPUnit_Framework_MockObject_MockObject|TestHelpersMock
      */
     private function createPHPUnitMockBuilder(
         string $mockClass,
         array $constructorArgs = null,
         $methods = false
-    ): TestHelpersMock {
+    ): PHPUnit_Framework_MockObject_MockObject {
         $builder = $this->getMockBuilder($mockClass);
 
         if (isset($constructorArgs)) {
@@ -115,7 +116,18 @@ trait BuildsMocks
             $builder->setMethods($methods);
         }
 
-        return new TestHelpersMock($builder->getMock());
+        $mock = $builder->getMock();
+        $mockedClass = get_class($mock);
+        $helperClass = $this->getClassShortName(TestHelpersMock::class);
+        $wrapperClass = $helperClass . '_' . $mockedClass;
+
+        $template = file_get_contents(__DIR__ . '/../../Helpers/TestHelpersMock.php');
+        $template = str_replace("class $helperClass", "class $wrapperClass extends $mockedClass", $template);
+        $template = substr($template, strpos($template, "class $wrapperClass"));
+
+        eval($template);
+
+        return new $wrapperClass($mock);
     }
 
     /**
@@ -142,5 +154,14 @@ trait BuildsMocks
         } else {
             $this->app->instance($mockClass, $mock);
         }
+    }
+
+    /**
+     * @param string $class
+     * @return string
+     */
+    private function getClassShortName(string $class): string
+    {
+        return substr(strrchr($class, '\\'), 1);
     }
 }
