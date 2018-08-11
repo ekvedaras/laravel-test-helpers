@@ -17,15 +17,6 @@ class TestHelpersMock implements \PHPUnit_Framework_MockObject_MockObject
     private $mock;
 
     /**
-     * TestHelpersMock constructor.
-     * @param \PHPUnit_Framework_MockObject_MockObject $mock
-     */
-    public function __construct(\PHPUnit_Framework_MockObject_MockObject $mock)
-    {
-        $this->mock = $mock;
-    }
-
-    /**
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
     public function getMock(): \PHPUnit_Framework_MockObject_MockObject

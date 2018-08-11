@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace Ekvedaras\LaravelTestHelpers\Traits\Helpers;
 
+use Ekvedaras\LaravelTestHelpers\Exceptions\MockInjectionException;
 use Ekvedaras\LaravelTestHelpers\Helpers\TestHelpersMock;
 use Illuminate\Foundation\Application;
 use Mockery;
+use Mockery\Instantiator;
 use Mockery\MockInterface;
 use PHPUnit\Framework\MockObject\MockBuilder;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit_Framework_MockObject_MockObject;
-use RuntimeException;
+use ReflectionClass;
+use ReflectionException;
 
 /**
  * Trait BuildsMocks
@@ -28,7 +32,6 @@ trait BuildsMocks
      * @param array|null $constructorArgs
      * @param bool $onlyForInjector
      * @return PHPUnit_Framework_MockObject_MockObject|TestHelpersMock
-     * @throws RuntimeException
      */
     protected function mock(
         string $mockClass,
@@ -36,9 +39,10 @@ trait BuildsMocks
         $methods = false,
         array $constructorArgs = null,
         bool $onlyForInjector = false
-    ): PHPUnit_Framework_MockObject_MockObject {
+    ): PHPUnit_Framework_MockObject_MockObject
+    {
         $this->forgetInstances($mockClass, $injectorClass);
-        $mock = $this->createPHPUnitMockBuilder($mockClass, $constructorArgs, $methods);
+        $mock = $this->createPHPUnitMock($mockClass, $constructorArgs, $methods);
         $this->injectMockToLaravel($mockClass, $mock, $onlyForInjector, $injectorClass);
 
         return $mock;
@@ -54,7 +58,8 @@ trait BuildsMocks
         string $mockClass,
         string $injectorClass = null,
         bool $onlyForInjector = false
-    ): MockInterface {
+    ): MockInterface
+    {
         $this->forgetInstances($mockClass, $injectorClass);
         $mock = Mockery::mock($mockClass);
         $this->injectMockToLaravel($mockClass, $mock, $onlyForInjector, $injectorClass);
@@ -68,11 +73,12 @@ trait BuildsMocks
      * @param bool $onlyForInjector
      * @return MockInterface
      */
-    protected function initMockerySpy(
+    protected function spy(
         string $mockClass,
         string $injectorClass = null,
         bool $onlyForInjector = false
-    ): MockInterface {
+    ): MockInterface
+    {
         $this->forgetInstances($mockClass, $injectorClass);
         $mock = Mockery::spy($mockClass);
         $this->injectMockToLaravel($mockClass, $mock, $onlyForInjector, $injectorClass);
@@ -98,12 +104,14 @@ trait BuildsMocks
      * @param array|null $constructorArgs
      * @param array|null|bool $methods
      * @return PHPUnit_Framework_MockObject_MockObject|TestHelpersMock
+     * @throws ReflectionException
      */
-    private function createPHPUnitMockBuilder(
+    private function createPHPUnitMock(
         string $mockClass,
         array $constructorArgs = null,
         $methods = false
-    ): PHPUnit_Framework_MockObject_MockObject {
+    ): PHPUnit_Framework_MockObject_MockObject
+    {
         $builder = $this->getMockBuilder($mockClass);
 
         if (isset($constructorArgs)) {
@@ -125,9 +133,74 @@ trait BuildsMocks
         $template = str_replace("class $helperClass", "class $wrapperClass extends $mockedClass", $template);
         $template = substr($template, strpos($template, "class $wrapperClass"));
 
-        eval($template);
+        return $this->getObject(
+            $template,
+            $wrapperClass,
+            $mock,
+            $mockClass,
+            !is_null($constructorArgs),
+            (array)$constructorArgs
+        );
+    }
 
-        return new $wrapperClass($mock);
+    /**
+     * @param string $code
+     * @param string $className
+     * @param object $proxyTarget
+     * @param array|string $type
+     * @param bool $callOriginalConstructor
+     * @param array $arguments
+     * @param bool $callAutoload
+     * @param bool $returnValueGeneration
+     *
+     * @return TestHelpersMock|MockObject
+     * @throws ReflectionException
+     */
+    private function getObject(
+        string $code,
+        string $className,
+        $proxyTarget,
+        string $type = '',
+        bool $callOriginalConstructor = false,
+        array $arguments = [],
+        bool $callAutoload = false,
+        bool $returnValueGeneration = true
+    )
+    {
+        $this->evalClass($code, $className);
+
+        if ($callOriginalConstructor &&
+            is_string($type) &&
+            !interface_exists($type, $callAutoload)) {
+            if (count($arguments) === 0) {
+                $object = new $className;
+            } else {
+                $class = new ReflectionClass($className);
+                $object = $class->newInstanceArgs($arguments);
+            }
+        } else {
+            $instantiator = new Instantiator;
+            $object = $instantiator->instantiate($className);
+        }
+
+        $object->__phpunit_setOriginalObject($proxyTarget);
+
+        if ($object instanceof MockObject) {
+            $object->__phpunit_setReturnValueGeneration($returnValueGeneration);
+        }
+
+        return $object;
+    }
+
+    /**
+     * @param string $code
+     * @param string $className
+     */
+    private function evalClass(string $code, string $className): void
+    {
+        if (!class_exists($className, false)) {
+            eval($code);
+        }
     }
 
     /**
@@ -135,17 +208,18 @@ trait BuildsMocks
      * @param PHPUnit_Framework_MockObject_MockObject|MockInterface $mock
      * @param bool $onlyForInjector
      * @param string|null $injectorClass
-     * @throws RuntimeException
+     * @throws MockInjectionException
      */
     private function injectMockToLaravel(
         string $mockClass,
         $mock,
         bool $onlyForInjector = false,
         string $injectorClass = null
-    ): void {
+    ): void
+    {
         if ($onlyForInjector) {
             if (!isset($injectorClass)) {
-                throw new RuntimeException('Injector class must be specified when using "onlyForInjector" bind.');
+                throw MockInjectionException::injectorNotGiven();
             }
 
             $this->app->when($injectorClass)->needs($mockClass)->give(function () use ($mock) {

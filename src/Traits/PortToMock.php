@@ -31,7 +31,8 @@ trait PortToMock
      */
     public function __phpunit_setOriginalObject($originalObject)
     {
-        return $this->getMock()->__phpunit_setOriginalObject($originalObject);
+        $this->mock = $originalObject;
+        return $this->getMock();
     }
 
     /**
@@ -65,15 +66,5 @@ trait PortToMock
     public function __phpunit_setReturnValueGeneration(bool $returnValueGeneration)
     {
         return $this->getMock()->__phpunit_setReturnValueGeneration($returnValueGeneration);
-    }
-
-    /**
-     * @param $name
-     * @param $arguments
-     * @return mixed
-     */
-    public function __call($name, $arguments)
-    {
-        return $this->getMock()->$name($arguments);
     }
 }

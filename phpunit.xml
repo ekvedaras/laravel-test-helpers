@@ -17,6 +17,7 @@
             <directory suffix=".php">./src</directory>
             <exclude>
                 <file>./src/Helpers/TestHelpersMock.php</file>
+                <file>./src/Traits/PortToMock.php</file>
             </exclude>
         </whitelist>
     </filter>

@@ -6,6 +6,9 @@ namespace Tests\Unit\Traits\Helpers;
 
 use Ekvedaras\LaravelTestHelpers\Traits\Helpers\BuildsMocks;
 use Tests\TestCase;
+use Tests\Unit\Traits\Helpers\BuildsMocksTest\MockeryTests;
+use Tests\Unit\Traits\Helpers\BuildsMocksTest\PhpunitTests;
+use Tests\Unit\Traits\Helpers\BuildsMocksTest\SpyTests;
 
 /**
  * Class BuildsMocksTest
@@ -13,45 +16,51 @@ use Tests\TestCase;
  */
 class BuildsMocksTest extends TestCase
 {
-    use BuildsMocks;
-
-    /** @test */
-    public function it_creates_helper_class_which_extends_the_mock(): void
-    {
-        $mock = $this->mock(Dummy::class);
-
-        $this->assertInstanceOf(Dummy::class, $mock->getMock());
-    }
-
-    /** @test */
-    public function it_injects_mock_into_laravel(): void
-    {
-        $mock = $this->mock(Dummy::class);
-
-        $this->assertSame($mock, app(Dummy::class));
-    }
-
-    /** @test */
-    public function it_forgets_given_class_before_creating_a_mock(): void
-    {
-        $this->app->singleton(Dummy::class);
-        $previousInstance = app(Dummy::class);
-
-        $this->assertSame($previousInstance, app(Injector::class)->dummy);
-
-        $mock = $this->mock(Dummy::class);
-
-        $this->assertNotSame($previousInstance, app(Injector::class)->dummy);
-        $this->assertSame($mock, app(Injector::class)->dummy);
-    }
+    use BuildsMocks, PhpunitTests, MockeryTests, SpyTests;
 }
-
 
 /**
  * Class Dummy
  * @package Tests\Unit\Traits\Helpers
  */
 class Dummy
+{
+    /** @var bool */
+    private $foo;
+
+    /**
+     * Dummy constructor.
+     * @param bool $foo
+     */
+    public function __construct(bool $foo = false)
+    {
+        $this->foo = $foo;
+    }
+
+    /**
+     * @param null $foo
+     * @param null $bar
+     * @return bool
+     */
+    public function getFalse($foo = null, $bar = null): bool
+    {
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getFoo(): bool
+    {
+        return (bool)$this->foo;
+    }
+}
+
+/**
+ * Class DummyNoConstructor
+ * @package Tests\Unit\Traits\Helpers
+ */
+class DummyNoConstructor
 {
     /**
      * @param null $foo
