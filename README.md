@@ -1,17 +1,24 @@
 # laravel-test-helpers
-Various helpers for writing tests for Laravel applications
+
+When writing tests daily, some actions might get frustrating to repeat.
+This package offers a solution to some of those problems and helps to write tests faster and make them more clean.
+It does not enforce anything. The main way of building mocks and expectations can still be used where it makes sense to.
 
 ## Installation
 
 `composer require ekvedaras/laravel-test-helpers --dev`
 
-No to register any service providers.
+## Usage
+
+Just use `TestHelpers` trait (or any of others provided if you want to be explicit) in your test class.
 
 ## Helpers
 
 ### [`TestHelpersMock`](src/Helpers/TestHelpersMock.php)
 
 Providers helper methods for defining PhpUnit mock expectations more quickly.
+
+> NOTE: To create this mock `BuildsMocks@mock` has to be used
 
 * `once`
 * `twice`
@@ -22,79 +29,89 @@ Providers helper methods for defining PhpUnit mock expectations more quickly.
 * `never`
 * `fail`
 
-> NOTE: To create this mock `BuildsMocks@mock` has to be used
+### [`BuildsMocks`](src/Traits/Helpers/BuildsMocks.php) trait
 
-### [`BuildsMocks`](src/Traits/BuildsMocks.php) trait
+Creates mocks and injects them into Laravel, so mocks would be resolve instead of real instances
+using `app(My::class)` and when container auto resolves injector(s) constructor arguments.
 
-`TODO`
+```php
+// Creates PhpUnit mock wrapped with TestHelpersMock 
+$this->mock($mockClass, $injectorClass, $methods, $constructorArgs, $onlyForInjector);
 
-### [`ChecksSingletons`](src/Traits/ChecksSingletons.php) trait
+// Creates Mockery mock
+$this->mockery($mockClass, $injectorClass, $onlyForInjector);
 
-`TODO`
+// Creates spy mock
+$this->spy($mockClass, $injectorClass, $onlyForInjector);
+```
 
-### [`TestsCommands`](src/Traits/TestsCommands.php) trait
+> NOTE: Only the first parameter is required
 
-`TODO`
+### [`ChecksSingletons`](src/Traits/Helpers/ChecksSingletons.php) trait
 
-### [`TestsExceptions`](src/Traits/TestsExceptions.php) trait
+Checks if given class is marked as a singleton.
 
-`TODO`
+```php
+$this->assertSingleton(My::class);
+```
+
+### [`TestsCommands`](src/Traits/Helpers/TestsCommands.php) trait
+
+Creates command tester for a given command class.
+
+```php
+$tester = $this->getCommandTester(MyCommand::class);
+$tester->execute($input);
+$out = $tester->getDisplay();
+```
+
+### [`TestsHelpers`](src/Traits/TestHelpers.php) trait
+
+Just a convenient trait which includes all traits mentioned above.
 
 ## Examples
+
+> More examples can be found in [packages tests](tests/Unit).
 
 ### Mock expectations with `TestHelpersMock`
 
 ```php
-$mock = $this->mock('SomeClass');
+use BuildsMocks;
 
-// Default
+$mock = $this->mock(My::class);
+
+
 // Using helpers
-    
-$mock->expects($this->once())->method('someMethod');
+// Equivalent
+
+
 $mock->once('someMethod');
-        
+$mock->expects($this->once())->method('someMethod');
+
+$mock->once('someMethod', $foo, $bar);        
 $mock->expects($this->once())->method('someMethod')->with($foo, $bar);
-$mock->once('someMethod', $foo, $bar);
 
-$mock->expects($this->exactly(2))->method('someMethod')->with($foo, $bar);
 $mock->twice('someMethod', $foo, $bar);
+$mock->expects($this->exactly(2))->method('someMethod')->with($foo, $bar);
 
-$mock->expects($this->exactly(3))->method('someMethod')->with($foo, $bar)->willReturn(true);
 $mock->times(3, 'someMethod', $foo, $bar)->willReturn(true);
+$mock->expects($this->exactly(3))->method('someMethod')->with($foo, $bar)->willReturn(true);
 
-$mock->expects($this->any())->method('someMethod')->with($foo, $bar);
 $mock->any('someMethod', $foo, $bar);
+$mock->expects($this->any())->method('someMethod')->with($foo, $bar);
 
-$mock->expects($this->exactly(2))->method('someMethod')->withConsecutive([$foo], [$bar]);
 $mock->consecutiveTwice('someMethod', [$foo], [$bar]);
+$mock->expects($this->exactly(2))->method('someMethod')->withConsecutive([$foo], [$bar]);
 
-$mock->expects($this->exactly(3)->method('someMethod')->withConsecutive([$foo], [$bar], [$foo, $bar]);
 $mock->consecutive(3, 'someMethod', [$foo], [$bar], [$foo, $bar]);
+$mock->expects($this->exactly(3)->method('someMethod')->withConsecutive([$foo], [$bar], [$foo, $bar]);
 
-$mock->expects($this->never())->method('someMethod');
 $mock->never('someMethod');
+$mock->expects($this->never())->method('someMethod');
 
-$mock->expects($this->any())->method('someMethod')->willThrowException(new \Exception());
 $mock->fail('someMethod', new \Exception());
-        
-$mock->expects($this->any())->method('someMethod')->with($foo, $bar)->willThrowException(new \Exception());
+$mock->expects($this->any())->method('someMethod')->willThrowException(new \Exception());
+
 $mock->fail('someMethod', new \Exception(), $foo, $bar);
-```
-
-### Build mocks with `BuildsMocks`
-
-```php
-// TODO
-```
-
-### Assert singleton definition with `ChecksSingletons`
-
-```php
-// TODO
-```
-
-### Test console commands with `TestsCommands`
-
-```php
-// TODO
+$mock->expects($this->any())->method('someMethod')->with($foo, $bar)->willThrowException(new \Exception());
 ```
