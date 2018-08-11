@@ -1,5 +1,8 @@
 # laravel-test-helpers
 
+[![Build Status](https://travis-ci.org/ekvedaras/laravel-test-helpers.svg?branch=master)](https://travis-ci.org/ekvedaras/laravel-test-helpers)
+[![Coverage Status](https://coveralls.io/repos/github/ekvedaras/laravel-test-helpers/badge.svg)](https://coveralls.io/github/ekvedaras/laravel-test-helpers)
+
 When writing tests daily, some actions might get frustrating to repeat.
 This package offers a solution to some of those problems and helps to write tests faster and make them more clean.
 It does not enforce anything. The main way of building mocks and expectations can still be used where it makes sense to.
