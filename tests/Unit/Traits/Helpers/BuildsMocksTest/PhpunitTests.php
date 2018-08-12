@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Traits\Helpers\BuildsMocksTest;
 
-use Ekvedaras\LaravelTestHelpers\Exceptions\MockInjectionException;
-use Ekvedaras\LaravelTestHelpers\Helpers\TestHelpersMock;
-use Illuminate\Contracts\Foundation\Application;
 use Tests\Unit\Traits\Helpers\Dummy;
-use Tests\Unit\Traits\Helpers\DummyNoConstructor;
 use Tests\Unit\Traits\Helpers\Injector;
+use Illuminate\Contracts\Foundation\Application;
+use Tests\Unit\Traits\Helpers\DummyNoConstructor;
+use Ekvedaras\LaravelTestHelpers\Helpers\TestHelpersMock;
+use Ekvedaras\LaravelTestHelpers\Exceptions\MockInjectionException;
 
 /**
- * Trait PhpunitTests
- * @package Tests\Unit\Traits\Helpers\BuildsMocksTest
+ * Trait PhpunitTests.
  * @property-read Application app
  * @method TestHelpersMock mock(string $mockClass, string $injectorClass = null, $methods = false, array $constructorArgs = null, bool $onlyForInjector = false)
  */

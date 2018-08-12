@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Ekvedaras\LaravelTestHelpers\Traits;
 
-use PHPUnit\Framework\MockObject\Matcher\Invocation;
 use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit\Framework\MockObject\Matcher\Invocation;
 
 /**
- * Trait PortToMock
- * @package Ekvedaras\LaravelTestHelpers\Traits
+ * Trait PortToMock.
  */
 trait PortToMock
 {
@@ -19,7 +18,7 @@ trait PortToMock
     abstract public function getMock(): PHPUnit_Framework_MockObject_MockObject;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function expects(Invocation $matcher)
     {
@@ -27,16 +26,17 @@ trait PortToMock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function __phpunit_setOriginalObject($originalObject)
     {
         $this->mock = $originalObject;
+
         return $this->getMock();
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function __phpunit_getInvocationMocker()
     {
@@ -44,7 +44,7 @@ trait PortToMock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function __phpunit_verify()
     {
@@ -52,7 +52,7 @@ trait PortToMock
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function __phpunit_hasMatchers()
     {

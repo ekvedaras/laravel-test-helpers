@@ -9,8 +9,7 @@ use Illuminate\Foundation\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
- * Trait TestsCommands
- * @package Ekvedaras\LaravelTestHelpers\Helpers
+ * Trait TestsCommands.
  *
  * @property-read Application $app
  */

@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Ekvedaras\LaravelTestHelpers\Helpers;
 
 /**
- * Class TestHelpersMock
- * @package Ekvedaras\LaravelTestHelpers\Helpers
+ * Class TestHelpersMock.
  * @method PHPUnit\Framework\MockObject\Builder\InvocationMocker method($constraint)
  */
 class TestHelpersMock implements \PHPUnit_Framework_MockObject_MockObject
@@ -91,8 +90,7 @@ class TestHelpersMock implements \PHPUnit_Framework_MockObject_MockObject
         int $times,
         string $method,
         ...$vars
-    ): \PHPUnit\Framework\MockObject\Builder\InvocationMocker
-    {
+    ): \PHPUnit\Framework\MockObject\Builder\InvocationMocker {
         return $this->getMock()
             ->expects(\PHPUnit\Framework\TestCase::exactly($times))
             ->method($method)
@@ -118,8 +116,7 @@ class TestHelpersMock implements \PHPUnit_Framework_MockObject_MockObject
         string $method,
         \Exception $exception,
         ...$vars
-    ): \PHPUnit\Framework\MockObject\Builder\InvocationMocker
-    {
+    ): \PHPUnit\Framework\MockObject\Builder\InvocationMocker {
         return $this->any($method, ...$vars)->willThrowException($exception);
     }
 }

@@ -4,18 +4,17 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use Carbon\Carbon;
 use Exception;
+use Carbon\Carbon;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
 /**
- * Class TestCase
- * @package Tests
+ * Class TestCase.
  */
 class TestCase extends BaseTestCase
 {
     /**
-     * Set carbon date to avoid test timing issues
+     * Set carbon date to avoid test timing issues.
      * @throws Exception
      */
     protected function setUp()
