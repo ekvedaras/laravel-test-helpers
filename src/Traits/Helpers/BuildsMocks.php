@@ -162,7 +162,7 @@ trait BuildsMocks
         $proxyTarget,
         string $type = '',
         bool $callOriginalConstructor = false,
-        array $arguments = [],
+        array $arguments = [ ],
         bool $callAutoload = false,
         bool $returnValueGeneration = true
     )
@@ -222,7 +222,7 @@ trait BuildsMocks
                 throw MockInjectionException::injectorNotGiven();
             }
 
-            $this->app->when($injectorClass)->needs($mockClass)->give(function () use ($mock) {
+            $this->app->when($injectorClass)->needs($mockClass)->give(function() use ($mock) {
                 return $mock;
             });
         } else {
