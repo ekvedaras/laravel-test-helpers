@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Helpers;
 
-use Ekvedaras\LaravelTestHelpers\Helpers\TestHelpersMock;
-use Ekvedaras\LaravelTestHelpers\Traits\Helpers\BuildsMocks;
 use Exception;
 use Tests\TestCase;
+use Ekvedaras\LaravelTestHelpers\Helpers\TestHelpersMock;
+use Ekvedaras\LaravelTestHelpers\Traits\Helpers\BuildsMocks;
 
 /**
- * Class TestHelpersMockTest
- * @package Tests\Unit\Helpers
+ * Class TestHelpersMockTest.
  * @covers \Ekvedaras\LaravelTestHelpers\Helpers\TestHelpersMock
  */
 class TestHelpersMockTest extends TestCase
@@ -113,10 +112,10 @@ class TestHelpersMockTest extends TestCase
     {
         /** @var TestHelpersMock|Dummy $mock */
         $mock = $this->mock(Dummy::class);
-        $mock->consecutiveTwice('getFalse')->willReturnOnConsecutiveCalls($return = (bool)rand(0, 1), !$return);
+        $mock->consecutiveTwice('getFalse')->willReturnOnConsecutiveCalls($return = (bool) rand(0, 1), ! $return);
 
         $this->assertEquals($return, $mock->getFalse());
-        $this->assertEquals(!$return, $mock->getFalse());
+        $this->assertEquals(! $return, $mock->getFalse());
     }
 
     /** @test */
@@ -128,10 +127,10 @@ class TestHelpersMockTest extends TestCase
         /** @var TestHelpersMock|Dummy $mock */
         $mock = $this->mock(Dummy::class);
         $mock->consecutiveTwice('getFalse', [$foo, $bar], [$bar, $foo])
-            ->willReturnOnConsecutiveCalls($return = (bool)rand(0, 1), !$return);
+            ->willReturnOnConsecutiveCalls($return = (bool) rand(0, 1), ! $return);
 
         $this->assertEquals($return, $mock->getFalse($foo, $bar));
-        $this->assertEquals(!$return, $mock->getFalse($bar, $foo));
+        $this->assertEquals(! $return, $mock->getFalse($bar, $foo));
     }
 
     /** @test */
@@ -140,10 +139,10 @@ class TestHelpersMockTest extends TestCase
         /** @var TestHelpersMock|Dummy $mock */
         $mock = $this->mock(Dummy::class);
         $mock->consecutive(3, 'getFalse')
-            ->willReturnOnConsecutiveCalls($return = (bool)rand(0, 1), !$return, $return);
+            ->willReturnOnConsecutiveCalls($return = (bool) rand(0, 1), ! $return, $return);
 
         $this->assertEquals($return, $mock->getFalse());
-        $this->assertEquals(!$return, $mock->getFalse());
+        $this->assertEquals(! $return, $mock->getFalse());
         $this->assertEquals($return, $mock->getFalse());
     }
 
@@ -156,10 +155,10 @@ class TestHelpersMockTest extends TestCase
         /** @var TestHelpersMock|Dummy $mock */
         $mock = $this->mock(Dummy::class);
         $mock->consecutive(3, 'getFalse', [$foo, $bar], [$bar, $foo], [$foo, $foo])
-            ->willReturnOnConsecutiveCalls($return = (bool)rand(0, 1), !$return, $return);
+            ->willReturnOnConsecutiveCalls($return = (bool) rand(0, 1), ! $return, $return);
 
         $this->assertEquals($return, $mock->getFalse($foo, $bar));
-        $this->assertEquals(!$return, $mock->getFalse($bar, $foo));
+        $this->assertEquals(! $return, $mock->getFalse($bar, $foo));
         $this->assertEquals($return, $mock->getFalse($foo, $foo));
     }
 
@@ -199,10 +198,8 @@ class TestHelpersMockTest extends TestCase
     }
 }
 
-
 /**
- * Class Dummy
- * @package Tests\Unit\Helpers
+ * Class Dummy.
  */
 class Dummy
 {
@@ -218,8 +215,7 @@ class Dummy
 }
 
 /**
- * Class Injector
- * @package Tests\Unit\Helpers
+ * Class Injector.
  */
 class Injector
 {

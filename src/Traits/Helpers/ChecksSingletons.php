@@ -7,8 +7,7 @@ namespace Ekvedaras\LaravelTestHelpers\Traits\Helpers;
 use Illuminate\Foundation\Application;
 
 /**
- * Trait ChecksSingletons
- * @package Ekvedaras\LaravelTestHelpers\Helpers
+ * Trait ChecksSingletons.
  *
  * @property-read Application $app
  * @method void assertSame($expected, $actual, $message = '')
@@ -23,7 +22,7 @@ trait ChecksSingletons
         $this->assertSame(
             $this->app->make($class),
             $this->app->make($class),
-            $class . ' must be registered as singleton'
+            $class.' must be registered as singleton'
         );
     }
 }

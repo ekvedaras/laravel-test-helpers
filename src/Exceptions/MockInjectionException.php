@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Ekvedaras\LaravelTestHelpers\Exceptions;
 
-
 use Exception;
 
 /**
- * Class MockInjectionException
- * @package Ekvedaras\LaravelTestHelpers\Exceptions
+ * Class MockInjectionException.
  */
 class MockInjectionException extends Exception
 {

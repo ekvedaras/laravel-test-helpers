@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Traits\Helpers;
 
-use Ekvedaras\LaravelTestHelpers\Traits\Helpers\TestsCommands;
-use Illuminate\Console\Command;
 use Tests\TestCase;
+use Illuminate\Console\Command;
+use Ekvedaras\LaravelTestHelpers\Traits\Helpers\TestsCommands;
 
 /**
- * Class TestsCommandsTest
- * @package Tests\Unit\Traits\Helpers
+ * Class TestsCommandsTest.
  */
 class TestsCommandsTest extends TestCase
 {
@@ -26,13 +25,12 @@ class TestsCommandsTest extends TestCase
         $output = $tester->getDisplay(true);
 
         $this->assertContains('Laravel was set', $output);
-        $this->assertContains('First argument is ' . $arg1, $output);
+        $this->assertContains('First argument is '.$arg1, $output);
     }
 }
 
 /**
- * Class DummyCommand
- * @package Tests\Unit\Traits\Helpers
+ * Class DummyCommand.
  */
 class DummyCommand extends Command
 {
@@ -45,6 +43,6 @@ class DummyCommand extends Command
             $this->info('Laravel was set');
         }
 
-        $this->info('First argument is ' . $this->argument('arg1'));
+        $this->info('First argument is '.$this->argument('arg1'));
     }
 }

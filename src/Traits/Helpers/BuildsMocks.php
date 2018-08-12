@@ -4,21 +4,20 @@ declare(strict_types=1);
 
 namespace Ekvedaras\LaravelTestHelpers\Traits\Helpers;
 
-use Ekvedaras\LaravelTestHelpers\Exceptions\MockInjectionException;
-use Ekvedaras\LaravelTestHelpers\Helpers\TestHelpersMock;
-use Illuminate\Foundation\Application;
 use Mockery;
-use Mockery\Instantiator;
-use Mockery\MockInterface;
-use PHPUnit\Framework\MockObject\MockBuilder;
-use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit_Framework_MockObject_MockObject;
 use ReflectionClass;
 use ReflectionException;
+use Mockery\Instantiator;
+use Mockery\MockInterface;
+use Illuminate\Foundation\Application;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit\Framework\MockObject\MockBuilder;
+use Ekvedaras\LaravelTestHelpers\Helpers\TestHelpersMock;
+use Ekvedaras\LaravelTestHelpers\Exceptions\MockInjectionException;
 
 /**
- * Trait BuildsMocks
- * @package Ekvedaras\LaravelTestHelpers\Helpers
+ * Trait BuildsMocks.
  *
  * @property-read Application $app
  * @method MockBuilder getMockBuilder(string $mockClass)
@@ -39,8 +38,7 @@ trait BuildsMocks
         $methods = false,
         array $constructorArgs = null,
         bool $onlyForInjector = false
-    ): PHPUnit_Framework_MockObject_MockObject
-    {
+    ): PHPUnit_Framework_MockObject_MockObject {
         $this->forgetInstances($mockClass, $injectorClass);
         $mock = $this->createPHPUnitMock($mockClass, $constructorArgs, $methods);
         $this->injectMockToLaravel($mockClass, $mock, $onlyForInjector, $injectorClass);
@@ -58,8 +56,7 @@ trait BuildsMocks
         string $mockClass,
         string $injectorClass = null,
         bool $onlyForInjector = false
-    ): MockInterface
-    {
+    ): MockInterface {
         $this->forgetInstances($mockClass, $injectorClass);
         $mock = Mockery::mock($mockClass);
         $this->injectMockToLaravel($mockClass, $mock, $onlyForInjector, $injectorClass);
@@ -77,8 +74,7 @@ trait BuildsMocks
         string $mockClass,
         string $injectorClass = null,
         bool $onlyForInjector = false
-    ): MockInterface
-    {
+    ): MockInterface {
         $this->forgetInstances($mockClass, $injectorClass);
         $mock = Mockery::spy($mockClass);
         $this->injectMockToLaravel($mockClass, $mock, $onlyForInjector, $injectorClass);
@@ -110,8 +106,7 @@ trait BuildsMocks
         string $mockClass,
         array $constructorArgs = null,
         $methods = false
-    ): PHPUnit_Framework_MockObject_MockObject
-    {
+    ): PHPUnit_Framework_MockObject_MockObject {
         $builder = $this->getMockBuilder($mockClass);
 
         if (isset($constructorArgs)) {
@@ -127,9 +122,9 @@ trait BuildsMocks
         $mock = $builder->getMock();
         $mockedClass = get_class($mock);
         $helperClass = $this->getClassShortName(TestHelpersMock::class);
-        $wrapperClass = $helperClass . '_' . $mockedClass . '_' . str_random();
+        $wrapperClass = $helperClass.'_'.$mockedClass.'_'.str_random();
 
-        $template = file_get_contents(__DIR__ . '/../../Helpers/TestHelpersMock.php');
+        $template = file_get_contents(__DIR__.'/../../Helpers/TestHelpersMock.php');
         $template = str_replace("class $helperClass", "class $wrapperClass extends $mockedClass", $template);
         $template = substr($template, strpos($template, "class $wrapperClass"));
 
@@ -138,8 +133,8 @@ trait BuildsMocks
             $wrapperClass,
             $mock,
             $mockClass,
-            !is_null($constructorArgs),
-            (array)$constructorArgs
+            ! is_null($constructorArgs),
+            (array) $constructorArgs
         );
     }
 
@@ -162,16 +157,15 @@ trait BuildsMocks
         $proxyTarget,
         string $type = '',
         bool $callOriginalConstructor = false,
-        array $arguments = [ ],
+        array $arguments = [],
         bool $callAutoload = false,
         bool $returnValueGeneration = true
-    )
-    {
+    ) {
         $this->evalClass($code, $className);
 
         if ($callOriginalConstructor &&
             is_string($type) &&
-            !interface_exists($type, $callAutoload)) {
+            ! interface_exists($type, $callAutoload)) {
             if (count($arguments) === 0) {
                 $object = new $className;
             } else {
@@ -198,7 +192,7 @@ trait BuildsMocks
      */
     private function evalClass(string $code, string $className): void
     {
-        if (!class_exists($className, false)) {
+        if (! class_exists($className, false)) {
             eval($code);
         }
     }
@@ -215,14 +209,13 @@ trait BuildsMocks
         $mock,
         bool $onlyForInjector = false,
         string $injectorClass = null
-    ): void
-    {
+    ): void {
         if ($onlyForInjector) {
-            if (!isset($injectorClass)) {
+            if (! isset($injectorClass)) {
                 throw MockInjectionException::injectorNotGiven();
             }
 
-            $this->app->when($injectorClass)->needs($mockClass)->give(function() use ($mock) {
+            $this->app->when($injectorClass)->needs($mockClass)->give(function () use ($mock) {
                 return $mock;
             });
         } else {

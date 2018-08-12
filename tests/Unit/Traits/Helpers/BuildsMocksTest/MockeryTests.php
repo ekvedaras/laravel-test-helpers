@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Traits\Helpers\BuildsMocksTest;
 
-use Illuminate\Contracts\Foundation\Application;
 use Mockery\MockInterface;
 use Tests\Unit\Traits\Helpers\Dummy;
 use Tests\Unit\Traits\Helpers\Injector;
+use Illuminate\Contracts\Foundation\Application;
 
 /**
- * Trait MockeryTests
- * @package Tests\Unit\Traits\Helpers\BuildsMocksTest
+ * Trait MockeryTests.
  * @property-read Application app
  * @method MockInterface mockery(string $mockClass, string $injectorClass = null, bool $onlyForInjector = false)
  */

@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Traits\Helpers;
 
-use Ekvedaras\LaravelTestHelpers\Traits\Helpers\ChecksSingletons;
 use Tests\TestCase;
+use Ekvedaras\LaravelTestHelpers\Traits\Helpers\ChecksSingletons;
 
 /**
- * Class ChecksSingletonsTest
- * @package Tests\Unit\Traits\Helpers
+ * Class ChecksSingletonsTest.
  */
 class ChecksSingletonsTest extends TestCase
 {
@@ -24,8 +23,7 @@ class ChecksSingletonsTest extends TestCase
 }
 
 /**
- * Class DummySingleton
- * @package Tests\Unit\Traits\Helpers
+ * Class DummySingleton.
  */
 class DummySingleton
 {

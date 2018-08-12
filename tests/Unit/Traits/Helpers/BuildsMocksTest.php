@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Traits\Helpers;
 
-use Ekvedaras\LaravelTestHelpers\Traits\Helpers\BuildsMocks;
 use Tests\TestCase;
+use Tests\Unit\Traits\Helpers\BuildsMocksTest\SpyTests;
 use Tests\Unit\Traits\Helpers\BuildsMocksTest\MockeryTests;
 use Tests\Unit\Traits\Helpers\BuildsMocksTest\PhpunitTests;
-use Tests\Unit\Traits\Helpers\BuildsMocksTest\SpyTests;
+use Ekvedaras\LaravelTestHelpers\Traits\Helpers\BuildsMocks;
 
 /**
- * Class BuildsMocksTest
- * @package Tests\Unit\Traits\Helpers
+ * Class BuildsMocksTest.
  */
 class BuildsMocksTest extends TestCase
 {
@@ -20,8 +19,7 @@ class BuildsMocksTest extends TestCase
 }
 
 /**
- * Class Dummy
- * @package Tests\Unit\Traits\Helpers
+ * Class Dummy.
  */
 class Dummy
 {
@@ -52,13 +50,12 @@ class Dummy
      */
     public function getFoo(): bool
     {
-        return (bool)$this->foo;
+        return (bool) $this->foo;
     }
 }
 
 /**
- * Class DummyNoConstructor
- * @package Tests\Unit\Traits\Helpers
+ * Class DummyNoConstructor.
  */
 class DummyNoConstructor
 {
@@ -74,8 +71,7 @@ class DummyNoConstructor
 }
 
 /**
- * Class Injector
- * @package Tests\Unit\Traits\Helpers
+ * Class Injector.
  */
 class Injector
 {
