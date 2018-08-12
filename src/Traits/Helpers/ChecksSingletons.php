@@ -22,7 +22,7 @@ trait ChecksSingletons
         $this->assertSame(
             $this->app->make($class),
             $this->app->make($class),
-            $class.' must be registered as singleton'
+            $class . ' must be registered as singleton'
         );
     }
 }

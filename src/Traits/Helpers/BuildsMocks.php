@@ -122,9 +122,9 @@ trait BuildsMocks
         $mock = $builder->getMock();
         $mockedClass = get_class($mock);
         $helperClass = $this->getClassShortName(TestHelpersMock::class);
-        $wrapperClass = $helperClass.'_'.$mockedClass.'_'.str_random();
+        $wrapperClass = $helperClass . '_' . $mockedClass . '_' . str_random();
 
-        $template = file_get_contents(__DIR__.'/../../Helpers/TestHelpersMock.php');
+        $template = file_get_contents(__DIR__ . '/../../Helpers/TestHelpersMock.php');
         $template = str_replace("class $helperClass", "class $wrapperClass extends $mockedClass", $template);
         $template = substr($template, strpos($template, "class $wrapperClass"));
 
@@ -133,8 +133,8 @@ trait BuildsMocks
             $wrapperClass,
             $mock,
             $mockClass,
-            ! is_null($constructorArgs),
-            (array) $constructorArgs
+            !is_null($constructorArgs),
+            (array)$constructorArgs
         );
     }
 
@@ -157,7 +157,7 @@ trait BuildsMocks
         $proxyTarget,
         string $type = '',
         bool $callOriginalConstructor = false,
-        array $arguments = [],
+        array $arguments = [ ],
         bool $callAutoload = false,
         bool $returnValueGeneration = true
     ) {
@@ -165,7 +165,7 @@ trait BuildsMocks
 
         if ($callOriginalConstructor &&
             is_string($type) &&
-            ! interface_exists($type, $callAutoload)) {
+            !interface_exists($type, $callAutoload)) {
             if (count($arguments) === 0) {
                 $object = new $className;
             } else {
@@ -192,7 +192,7 @@ trait BuildsMocks
      */
     private function evalClass(string $code, string $className): void
     {
-        if (! class_exists($className, false)) {
+        if (!class_exists($className, false)) {
             eval($code);
         }
     }
@@ -211,11 +211,11 @@ trait BuildsMocks
         string $injectorClass = null
     ): void {
         if ($onlyForInjector) {
-            if (! isset($injectorClass)) {
+            if (!isset($injectorClass)) {
                 throw MockInjectionException::injectorNotGiven();
             }
 
-            $this->app->when($injectorClass)->needs($mockClass)->give(function () use ($mock) {
+            $this->app->when($injectorClass)->needs($mockClass)->give(function() use ($mock) {
                 return $mock;
             });
         } else {
