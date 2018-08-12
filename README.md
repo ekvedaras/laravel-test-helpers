@@ -1,8 +1,11 @@
 # laravel-test-helpers
 
-[![Build Status](https://travis-ci.org/ekvedaras/laravel-test-helpers.svg?branch=master)](https://travis-ci.org/ekvedaras/laravel-test-helpers)
-[![Code Quality](https://scrutinizer-ci.com/g/ekvedaras/laravel-test-helpers/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ekvedaras/laravel-test-helpers/?branch=master)
+[![Latest Version](https://img.shields.io/github/release/ekvedaras/laravel-test-helpers.svg)](https://github.com/ekvedaras/laravel-test-helpers/releases)
+[![Build Status](https://img.shields.io/travis/ekvedaras/laravel-test-helpers/master.svg)](https://travis-ci.org/ekvedaras/laravel-test-helpers)
+[![Quality Score](https://img.shields.io/scrutinizer/g/ekvedaras/laravel-test-helpers.svg)](https://scrutinizer-ci.com/g/ekvedaras/laravel-test-helpers)
 [![Coverage Status](https://coveralls.io/repos/github/ekvedaras/laravel-test-helpers/badge.svg)](https://coveralls.io/github/ekvedaras/laravel-test-helpers)
+[![StyleCI](https://styleci.io/repos/143764475/shield?style=flat)](https://styleci.io/repos/143764475)
+[![Total Downloads](https://img.shields.io/packagist/dt/ekvedaras/laravel-test-helpers.svg)](https://packagist.org/packages/ekvedaras/laravel-test-helpers)
 
 When writing tests daily, some actions might get frustrating to repeat.
 This package offers a solution to some of those problems and helps to write tests faster and make them more clean.
