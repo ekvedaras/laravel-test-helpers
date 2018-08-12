@@ -1,46 +1,53 @@
 {
-  "name": "ekvedaras/laravel-test-helpers",
-  "description": "Various helpers for writing tests for Laravel applications",
-  "type": "project",
-  "license": "GPL-3.0",
-  "authors": [
-    {
-      "name": "Ernestas Kvedaras",
-      "email": "kvedarasernestas@gmail.com"
-    }
-  ],
-  "minimum-stability": "stable",
-  "require": {
-    "php": ">=7.1",
-    "illuminate/support": "^5.6",
-    "mockery/mockery": "^1.1",
-    "phpunit/phpunit": "^7.3"
-  },
-  "require-dev": {
-    "facile-it/paraunit": "^0.12.3",
-    "orchestra/testbench": "^3.6"
-  },
-  "autoload": {
-    "psr-4": {
-      "Ekvedaras\\LaravelTestHelpers\\": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Tests\\": "tests/"
-    }
-  },
-  "scripts": {
-    "test": [
-      "./vendor/bin/paraunit run -c phpunit.xml --parallel 4 --ansi"
+    "name": "ekvedaras/laravel-test-helpers",
+    "description": "Various helpers for writing tests for Laravel applications",
+    "keywords": [
+        "ekvedaras",
+        "laravel",
+        "testing",
+        "phpunit",
+        "mockery",
+        "helper"
     ],
-    "cover": [
-      "./vendor/bin/paraunit coverage --parallel 4 -c phpunit.xml --html=coverage-report --ansi"
-    ]
-  },
-  "config": {
-    "preferred-install": "dist",
-    "sort-packages": true,
-    "optimize-autoloader": true
-  }
+    "type": "project",
+    "license": "GPL-3.0-or-later",
+    "homepage": "https://github.com/ekvedaras/laravel-test-helpers",
+    "authors": [
+        {
+            "name": "Ernestas Kvedaras",
+            "email": "kvedarasernestas@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^7.1",
+        "illuminate/support": "~5.6.0",
+        "mockery/mockery": "^1.0",
+        "phpunit/phpunit": "^7.0"
+    },
+    "require-dev": {
+        "facile-it/paraunit": "^0.12.3",
+        "orchestra/testbench": "^3.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ekvedaras\\LaravelTestHelpers\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": [
+            "./vendor/bin/paraunit run -c phpunit.xml --parallel 4 --ansi"
+        ],
+        "cover": [
+            "./vendor/bin/paraunit coverage --parallel 4 -c phpunit.xml --html=coverage-report --ansi"
+        ]
+    },
+    "config": {
+        "sort-packages": true
+    }
 }

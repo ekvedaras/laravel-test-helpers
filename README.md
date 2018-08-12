@@ -1,6 +1,7 @@
 # laravel-test-helpers
 
 [![Build Status](https://travis-ci.org/ekvedaras/laravel-test-helpers.svg?branch=master)](https://travis-ci.org/ekvedaras/laravel-test-helpers)
+[![Code Quality](https://scrutinizer-ci.com/g/ekvedaras/laravel-test-helpers/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ekvedaras/laravel-test-helpers/?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/ekvedaras/laravel-test-helpers/badge.svg)](https://coveralls.io/github/ekvedaras/laravel-test-helpers)
 
 When writing tests daily, some actions might get frustrating to repeat.
