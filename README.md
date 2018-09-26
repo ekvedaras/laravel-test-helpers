@@ -11,6 +11,10 @@ When writing tests daily, some actions might get frustrating to repeat.
 This package offers a solution to some of those problems and helps to write tests faster and make them more clean.
 It does not enforce anything. The main way of building mocks and expectations can still be used where it makes sense to.
 
+## Changelog
+
+* [v1.*](./CHANGELOG-1.x.md)
+
 ## Installation
 
 `composer require ekvedaras/laravel-test-helpers --dev`
