@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Ekvedaras\LaravelTestHelpers\Traits;
 
-use PHPUnit_Framework_MockObject_MockObject;
 use PHPUnit\Framework\MockObject\Matcher\Invocation;
+use PHPUnit_Framework_MockObject_MockObject;
 
 /**
  * Trait PortToMock.
@@ -46,9 +46,9 @@ trait PortToMock
     /**
      * {@inheritdoc}
      */
-    public function __phpunit_verify()
+    public function __phpunit_verify($unsetInvocationMocker = true)
     {
-        return $this->getMock()->__phpunit_verify();
+        return $this->getMock()->__phpunit_verify($unsetInvocationMocker);
     }
 
     /**
